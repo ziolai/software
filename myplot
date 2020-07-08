@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Requires running foamLog <log-file> first!!
+
+gnuplot -persist >/dev/null 2>&2 << EOF 
+   set logscale y 
+   plot "logs/UxFinalRes_0" with lines, \
+        "logs/UyFinalRes_0" with lines, \
+        "logs/epsilonFinalRes_0" with lines, \
+        "logs/RxxFinalRes_0" with lines, \
+        "logs/RxyFinalRes_0" with lines, \
+        "logs/RyyFinalRes_0" with lines 
+EOF 
