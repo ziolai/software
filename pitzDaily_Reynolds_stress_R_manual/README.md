@@ -1,7 +1,7 @@
 Abstract
 The objective of this humble endeavor is to describe how the celebrated Pitz-Daily incompressible tutorial (or any its variants) for simpleFoam can be extended with a Reynold stress tensor model for turbulence. This endeavor has been pursued by many (including the giants in this community) in the past and is by no means new. Our endeavor can in fact be stated as reproducing the tutorial [1,2] (among possible various others). Our motivation for stirring in this old pot once again is contribute to the documentation on how to set-up the case. We wish to complement existing tutorials with our insights. The Reynolds stress model solves for the six (in 2D four) components of the symmetric stress tensor R and the turbulent dissipation epsilon. The magnitude of the tensor R is equal to epsilon. Our biggest take-away lessons is that the over-relaxation of the equation (should this field?) for epsilon is essential to obtain convergence of the model. 
 
-Joint work with Kundan Mishra (iamkundam@gmail.com)
+Joint work with Kundan Mishra (iamkundan@gmail.com)
 
 
 1/ Introduction
