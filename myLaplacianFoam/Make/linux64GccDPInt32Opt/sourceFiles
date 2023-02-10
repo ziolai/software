@@ -1,0 +1,4 @@
+SOURCE = \
+myLaplacianFoam.C \
+
+# sources
