@@ -9,33 +9,25 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       polyBoundaryMesh;
-    location    "constant/polyMesh";
-    object      boundary;
+    class       dictionary;
+    location    "constant";
+    object      fvOptions;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-3
-(
-    left
+options
+{
+    energySource
     {
-        type            patch;
-        nFaces          1;
-        startFace       99;
-    }
-    right
-    {
-        type            patch;
-        nFaces          1;
-        startFace       100;
-    }
-    empty
-    {
-        type            empty;
-        inGroups        1(empty);
-        nFaces          400;
-        startFace       101;
-    }
-)
+        type            scalarSemiImplicitSource;
 
-// ************************************************************************* //
+        duration        1000.; // much longer than the simulation 
+        selectionMode   all;
+        volumeMode      absolute; 
+
+        injectionRateSuSp
+        {
+            T          (1 0); // K - only explicit contribution   
+        }
+    }
+}

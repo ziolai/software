@@ -15,9 +15,10 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+// see /opt/OpenFOAM/OpenFOAM-v1906/etc/controlDict for a complete list of DebugSwitches
 DebugSwitches 
 {
-    GAMG                0;
+    GAMG                2;
     GAMGAgglomeration   0;
     GAMGInterface       0;
     GAMGInterfaceField  0;
@@ -33,13 +34,13 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         3;
+endTime         1;
 
-deltaT          0.005;
+deltaT          1;
 
 writeControl    runTime;
 
-writeInterval   0.1;
+writeInterval   1;
 
 purgeWrite      0;
 

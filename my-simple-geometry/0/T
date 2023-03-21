@@ -23,12 +23,13 @@ boundaryField
     left
     {
         type            fixedValue;
-        value           uniform 100; 
+        value           uniform 0; 
     } 
 
     right
     {
-        type            zeroGradient;
+        type            fixedValue;
+        value           uniform 0; 
     }
 
     empty
