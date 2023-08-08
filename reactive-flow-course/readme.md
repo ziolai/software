@@ -3,42 +3,16 @@
 ##  Section 1: Introduction 
 
 ## Section 2: Course Description 
+[course-description](course-description/course-description.ipynb)  
 
-### Section 1.2: Target Audience 
-Assume prior exposure to use of OpenFoam for 
-1. (in)stationaryturbulent incompressible flow (s/pimleFoam) (well familiar; geometry definition, mesh generation, case set up, post-processing, residual control);  
-2. buoyant heat transfer (bouyantS/PimpleFoam) (prevous exposure); 
-3. radiative heat transfer (P1 and fvDOM) (limited exposure);
-4. conjugate heat transfer (fluid/solid domain with interface coupling) (limited exposure); 
+## Section 3: Geometry Definition and Mesh Generation
 
-Course will use [Foundation Version 11](https://github.com/OpenFOAM/OpenFOAM-11) of OpenFoam. 
-
-Virtually no coding assignment. Course limited to setting up cases, running cases, interpretation of results, discussing what-if scenarios. 
-
-reactingFoam: describe what equations reactingFoam solves. describe how reactingFoam solves these equations? 
-
-What other solvers does the course intend to use (aside from reactingFoam)?  
-
-### Section 2.2: Course Content 
-#### Day-1: Copy-Paste from Eric here
-#### Day-2: Copy-Paste from Eric here
-#### Day-3: Copy-Paste from Eric here
-
-### Section 2.3: Course References 
-1. wiki 
-2. Ansys Fluent Manual 
-3. cfd-online material 
-4. Dacolt course notes; 
-5. F. Contino course notes; 
-
-
-
-
-
-## Section 3: reactingFoam Case-Setup Description 
+## Section 4: OpenFoam Case Setup Description 
 Goal: explain case set-up by explaining dictionaries in 0-dir/files, system-dir/files and constant-dir/files. In particular 
 
-### Section 1.3: reactingFoam case-dir/constant-dir  
+### Section 1.4: General Solver 
+
+### Section 2.4: reactingFoam case-dir/constant-dir  
 
 1. turbulenceProperties: see e.g. [Turbulence](https://www.openfoam.com/documentation/guides/latest/doc/guide-turbulence.html#sec-turbulence-usage) and other sources; 
 
@@ -80,51 +54,79 @@ Goal: explain case set-up by explaining dictionaries in 0-dir/files, system-dir/
     }
 \end{verbatim}
 
-### Section 2.3: reactingFoam case-dir/system-dir
+### Section 2.4: reactingFoam case-dir/system-dir
 
 Explain relevant parts of fvSolution (solvers.Yi{} and PIMPLE{Yref{}})  and of fvSchemes (divSchemes.div(phi,Yi) and divSchemes.div(phi,K)). Refer to other courses for parts not explained here. 
 
-### Section 3.3: reactingFoam case-dir/0-dir 
+### Section 3.4: reactingFoam case-dir/0-dir 
 
 Explain Ydefault and species-name. 
 
-## Section 4: Laminar (non-premixed? hydrogen) ToroFlames:
+### Section 4.4: chtMultiregionFoam Setup 
+
+As above, seperately for fluid and solid domain. 
+
+## Section 5: Laminar (non-premixed? hydrogen) ToroFlames:
 See [laminarSMOKE](https://github.com/acuoci/laminarSMOKE) and 
 [ToroFlames/F3](https://github.com/acuoci/laminarSMOKE/tree/master/run/validation/ToroFlames/F3) 
 
-Validation by Eric using DUO. Need to include results here.
+Validation by Eric using DUO. According to Eric, results are sensitive to solver settings. What does Eric mean exactly? 
 
-## Section 5: Turbulent Small-Scale Non-Premixed Combustion: SandiaD test case 
+<div>
+<img src="./tutorial-cases/case-toro-flamef3/ToroFlameF3-laminarSmoke.png" width=400 />
+<center> Figure 1: Results obtain using laminarSMOKE.   
+    </center>
+</div>
 
-### Section 1.5: Test case description 
-1. describe the case: non-premixed combustion on CH4; pilot-burner stabilized; reference results from measurements of TNF workshop and from literature; 
+<div>
+<img src="./tutorial-cases/case-toro-flamef3/ToroFlameF3-DUO.png" width=400 />
+<center> Figure 2: Results obtain using DUO.   
+    </center>
+</div>
+
+<div>
+<img src="./tutorial-cases/case-toro-flamef3/ToroFlameF3-chtMultiregionFoam.png" width=400 />
+<center> Figure 3: Results obtain using chtMultiregionFoam.   
+    </center>
+</div> 
+
+
+## Section 6: Turbulent Small-Scale Non-Premixed Combustion: SandiaD test case 
+
+### Section 1.6: Test case description 
+1. describe the case: non-premixed combustion using CH4; jet-flame pilot-burner stabilized; reference results from measurements of TNF workshop and from literature; 
 2. transient solution to reach steady state; 
 3. geometry definition, mesh generation and mesh check;
 4. describe patch settings: inlet, outlet, walls, symmetry settings;  
 5. running the non-reactive and reactive case; (with and without LTS, with and without tabulation and chemistry reduction); 
 6. post-processing results and residual; 
 
-### Section 2.5: Numerical Considerations 
+### Section 2.6: Numerical Considerations 
 
 1. compare runs with one-step chemistry, two-step chemistry, various forms of four-step chemistry, GRI-2.0 and GRI-3.0;
 2. compare thermal NO post-processing with NO computed from chemical mechanism; 
 3. compare runs with and without local time stepping (LTS); is this reported in the literature? 
 4. compare runs with and without TDAC chemistry tabulation and reduction: literature? 
-5. compare runs on various meshes using remap from coarse to fine mesh; 
-6. compare various wall temperature boundary conditions (insulating, radiating); 
-7. extend to (D)DES and LES; 
-8. extend to other flames (SandiaE and SandiaF) in TNF workshop series; 
+5. compare various wall temperature boundary conditions (insulating, radiating); 
+6. compare runs on various meshes using remap from coarse to fine mesh; 
+7. mixture fraction computation using function object; 
+8. runs with adaptive mesh refinement (and load balancing)? 
+9. extend to (D)DES and LES; 
+10. extend to other flames (SandiaE and SandiaF) in TNF workshop series; 
 
-### Section 3.5: Reference results
-1. [report](borujeni-norouzi-SandiaD-reactingFoam.pdf) by Borujeni and Norouzi; 
-2. [report](talice-SandiaD-reactingFoam.pdf) by Marco Talice using ESI v1906; 
+### Section 3.6: Reference results
+1. [report](./tutorial-cases/case-sandia-flamed/borujeni-norouzi-SandiaD-reactingFoam.pdf) by Borujeni and Norouzi; 
+2. [report](./tutorial-cases/case-sandia-flamed/talice-SandiaD-reactingFoam.pdf) by Marco Talice using ESI v1906; 
 3. [paper](http://web.stanford.edu/group/pitsch/publication/PitschPhysFluids_12_2000.pdf) by Pitsch and Steiner using LES and Lagrangian Flamelet Model; 
+4. [paper](https://pubs.acs.org/doi/pdf/10.1021/acs.energyfuels.8b01001) Li e.a. on TDAC 
 
-## Section 6: Turbulent Large-Scale Non-Premixed Combustion: DLR test case|
+## Section 7: Turbulent Large-Scale Non-Premixed Combustion: DLR test case 
 
 [DLRCJH](https://develop.openfoam.com/committees/hpc/-/tree/develop/combustion/XiFoam/DLRCJH) 
 
-## Section 7: Turbulent Non-Premixed Combustion with Heat Transfer to Solid: reverseBurner test case 
+What is the Mavh number? Can test case be solved using rhoThermo? Is the resulting pressure matrix symmetric? Can the p-solve be done using GAMG? Can the pressure-velocity coupled solver be used?  
+
+## Section 8: Turbulent Non-Premixed Combustion with Heat Transfer to Solid: reverseBurner test case 
 
 [reverseBurner](https://mega.nz/fm/LJd1XQoS)
 
