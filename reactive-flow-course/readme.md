@@ -1,21 +1,52 @@
-# Reactive Flow Using OpenFoam 
+# Course of Reactive Flow Using OpenFoam 
 
-By Eric Daymo (eadaymo@tonkomo.com), Domenico Lahaye (d.j.p.lahaye@tudelft.nl) and helping friends.  
+By Eric Daymo (eadaymo@tonkomo.com), Domenico Lahaye (d.j.p.lahaye@tudelft.nl) and helping friends. 
+
+We would like to say special thanks to 
+- Marco Talice (m.talice@pm2engineering.com) (for help on the SandiaD and reverseBurner tutorial cases) and 
+- Alberto Cuoci (alberto.cuoci@polimi.it) (for help on the Toro Flames tutorial cases).   
 
 ##  Section 1: Introduction 
 
-Welcome to this course on simulating laminar and turbulent reactive flows using OpenFoam. Field of application is wide and needs to be described further (more).  
+Welcome to this course on simulating reactive flows using OpenFoam! 
 
-## Section 2: Course Description 
-A detailed course description can be found at [course-description](course-description/course-description.ipynb).  
+In typical applications, fuel and oxidizer are transported, mixed and consumed in chemical reactions. These reactions produce products and heat. The field is large and covers laminar and turbulent, stationary and transient, premixed, partially premixed and non-premixed scenarios. The fuel can be supplied in gasseous, liquid and solid form. 
+
+OpenFoam is extensively used in the simulating of reactive flows. Provide here links to recent papers (both solver development and application), seminar series (Singapore, Milano-Darmstadt) and previous courses (Dacolt, Contino, Lucchini).  
+
+This course extends over three days. It is organized as follows. (more here) 
+
+In this course, the model complexity is gradually increased. We will cover the following four tutorial cases: 
+
+1. laminar premixed combustion of gasseous hydrogen using XiFoam (Toro Flame + reference); extend to DLRCJH; 
+2. turbulent non-premixed combustion of methane in a pilot-stabiled flame using reactingFoam (SandiaD flame + references);
+3. turbulent non-premixed of methane jet flame in co-flow with air in fluid domain coupled with heat transfer to the enclosing solid domain using chtMultiRegionFoam (reverseBurner); 
+4. combustion of coal using coalChemistryFoam (kivaTest); 
+
+## Section 2: Course Description and Prerequisites 
+A detailed course description with prerequisites can be found at [course-description](course-description/course-description.ipynb).  
 
 ## Section 3: Geometry Definition and Mesh Generation
 
-The goal of this section is to provide a uniform description of geometry definition and mesh generation for all the tutorial cases used in this course. We favor the use of the open domain variant of cfMesh. We intend to provide scripts allowing to generate a coarse, intermediate and fine mesh. We will assume course participants to be sufficient familiar with geometry definition and mesh generation to be able to make informed use of the scripts that we provide. We intend to provide pointers on the mesh generation. 
+We will assume course participants to be sufficient familiar with geometry definition and mesh generation to be able to make informed use of the scripts that we provide. We therefore intend to provide pointers on the mesh generation.
+
+The goal of this section is to provide a uniform description of geometry definition and mesh generation for all the tutorial cases used in this course. 
+
+We favor the use of 
+- the CAD tool [Blender](www.blender.org) for geometry definition;
+- the Blender [plugin](https://github.com/tkeskita/snappyhexmesh_gui) for snappyhexmesh for mesh generation (ideally similar plugin for cfMesh); 
+
+We intend to provide scripts allowing to generate a coarse, intermediate and fine mesh.  We also intend to provide pointers to adaptive mesh generation and parallel load balancing. 
 
 ## Section 4: OpenFoam Solvers for Reactive Flow 
 
-### Section 1.4: reactive flow solvers in OpenFoam 
+OpenFoam provides various solvers for reactive flows. An overview is given in the slides of Tomasso Lucchini (provide pointer and precise slide number). 
+
+In this course, we intend to make use of the solvers described below. 
+
+### Section 1.4: xiFoam for premixed combustion (not Domenico) 
+
+ESI solver [description](https://develop.openfoam.com/Development/openfoam/-/blob/master/applications/solvers/combustion/XiFoam/XiFoam.C). 
  
 ### Section 2.4: reactingFoam for (non-)premixed combustion 
 
@@ -84,26 +115,45 @@ Other references do exist, e.g.
 - [Yang, Zhao, Ge](https://www.sciencedirect.com/science/article/pii/S0045793019301847?casa_token=4hTEFLeA4lUAAAAA:2mW2O2cT1y9MdlqSqMCV6G0AEV40wQs-kc6q1NAqV-7N7YeFuyL4NcXuwvWpg_M596abzrD5Jw);
 
 
-### Section 3.4: xiFoam for premixed combustion (not Domenico) 
-
-ESI solver [description](https://develop.openfoam.com/Development/openfoam/-/blob/master/applications/solvers/combustion/XiFoam/XiFoam.C). 
-
-### Section 4.4: chtMultiRegionFoam combustion and conjugate heat transfer
+### Section 3.4: chtMultiRegionFoam combustion and conjugate heat transfer
 
 ESI solver [description](https://develop.openfoam.com/Development/openfoam/-/blob/master/applications/solvers/heatTransfer/chtMultiRegionFoam/chtMultiRegionFoam.C)
 
-## Section 5: Large Scale Computations 
+### Section 4.4: coalChemistryFoam 
+
+ESI solver [description](https://develop.openfoam.com/Development/openfoam/-/blob/master/applications/solvers/lagrangian/coalChemistryFoam/coalChemistryFoam.C) 
+
+
+## Section 5: Large Scale Reactive Flow Computations 
+
+The insertion of set convection-diffusion-reaction equations for the chemical species (YEqn) or the insertion of the transport equations for radiative heat transfer quantities (IEqn) in the S/PIMPLE causes two effects. The first effect is the increase of computational cost per iteration. The second effect is the increase of number of S/PIMPLE iterations to reach converge in case of a stationary computation or to reach meaningful statistics (e.g. typical frequency of vortex shedding). The judicious choice of fast linear solver for large sparse parallel decomposed matrices thus becomes very important. 
+
+Add the pEqn no longer leads to symmetric matrix to which GAMG can be applied. 
+
+### Parallel Computing 
+
+- provide Allrun scripts for parallel decomposition of the case on various number of processors, allowing course participants to run the case overnight on TU Delft supercomputer; 
+- provide documentation (slides, videos, reference solutions) of large parallel runs 
+
+### Fast Sparse Linear Solvers 
 
 - discretization settings for YEqn (fvSchemes): draw parallels between YEqn and kEqn-epsEqn for turbulence in terms of discretization;
+- settings for solver and solverFinal (in case itv matters at all); 
 - linear solver settings (fvSolutions): pressure matrix no longer symmetric in case Mach number exceeds 0.5;
-- provide Allrun scripts for parallel decomposition of the case on various number of processors;  
 
 ## Section 6: OpenFoam Case Setup Description 
-Goal: explain case set-up by explaining dictionaries in 0-dir/files, system-dir/files and constant-dir/files. In particular 
 
-### Section 1.6: General Solver 
+Goal: adhere to user's perspective tof OpenFoam solvers and  In particular 
 
-### Section 2.6: reactingFoam case-dir/constant-dir  
+### Section 1.6: General Solver Case Setup
+
+Explain case set-up by explaining dictionaries in 0-dir/files, system-dir/files and constant-dir/files for generic OpenFoam solver.
+
+### Section 2.6: XiFoam Case Setup
+
+### Section 3.6: reactingFoam Case Setup 
+
+#### reactingFoam case-dir/constant-dir  
 
 1. turbulenceProperties: see e.g. [Turbulence](https://www.openfoam.com/documentation/guides/latest/doc/guide-turbulence.html#sec-turbulence-usage) and other sources; 
 
@@ -145,23 +195,32 @@ Goal: explain case set-up by explaining dictionaries in 0-dir/files, system-dir/
     }
 \end{verbatim}
 
-### Section 2.6: reactingFoam case-dir/system-dir
+#### reactingFoam case-dir/system-dir
 
 Explain relevant parts of fvSolution (solvers.Yi{} and PIMPLE{Yref{}})  and of fvSchemes (divSchemes.div(phi,Yi) and divSchemes.div(phi,K)). Refer to other courses for parts not explained here. 
 
-### Section 3.6: reactingFoam case-dir/0-dir 
+#### reactingFoam case-dir/0-dir 
 
 Explain Ydefault and species-name. 
 
-### Section 4.6: chtMultiregionFoam Setup 
+### Section 4.6: chtMultiregionFoam Case Setup 
 
 As above, seperately for fluid and solid domain. 
 
-## Section 7: Laminar (non-premixed? hydrogen) ToroFlames:
+### Section 5.6: coalChemistryFoam Case Setup 
+
+As above, seperately for fluid and solids in same computational.
+
+## Section 7: First Tutorial Case: Laminar (non-premixed? hydrogen) ToroFlames
+
+Premixed combustion using XiFoam. 
+
 See [laminarSMOKE](https://github.com/acuoci/laminarSMOKE) and 
 [ToroFlames/F3](https://github.com/acuoci/laminarSMOKE/tree/master/run/validation/ToroFlames/F3) 
 
-Validation by Eric using DUO. According to Eric, results are sensitive to solver settings.  
+Validation by Eric using DUO. According to Eric, results are sensitive to solver settings. This provides excellent material for exercises in the form of what-if scenarios. 
+
+Possibly extend to [DLRCJH](https://develop.openfoam.com/committees/hpc/-/tree/develop/combustion/XiFoam/DLRCJH) 
 
 <div>
 <img src="./tutorial-cases/case-toro-flamef3/ToroFlameF3-laminarSmoke.png" width=400 />
@@ -182,7 +241,7 @@ Validation by Eric using DUO. According to Eric, results are sensitive to solver
 </div> 
 
 
-## Section 8: Turbulent Small-Scale Non-Premixed Combustion: SandiaD test case 
+## Section 8: Second Tutorial Case: Turbulent Small-Scale Non-Premixed Combustion: SandiaD test case 
 
 ### Section 1.8: Source 
 [TNF Workshop](https://tnfworkshop.org/data-archives/pilotedjet/ch4-air/)
@@ -217,21 +276,17 @@ Validation by Eric using DUO. According to Eric, results are sensitive to solver
 4. [paper](https://pubs.acs.org/doi/pdf/10.1021/acs.energyfuels.8b01001) Li e.a. on TDAC 
 5. [video](https://www.linkedin.com/posts/senecal_cfd-convergecfd-combustion-activity-7069670018053013504-KFcJ/?utm_source=share&utm_medium=member_desktop%20\) ConvergeCFD simulation using LES anmd detailed chemistry;  
 
-## Section 9: Turbulent Large-Scale Non-Premixed Combustion: DLR test case 
-
-[DLRCJH](https://develop.openfoam.com/committees/hpc/-/tree/develop/combustion/XiFoam/DLRCJH) 
-
-Premixed combustion using XiFoam. 
-
-What is the Mach number? Can test case be solved using rhoThermo? Is the resulting pressure matrix symmetric? Can the p-solve be done using GAMG? Can the pressure-velocity coupled solver be used?  
-
-## Section 8: Turbulent Non-Premixed Combustion with Heat Transfer to Solid: reverseBurner test case 
+## Section 9: Turbulent Non-Premixed Combustion and Conjugate Heat Transfer: reverseBurner 
 
 [OF11](https://github.com/OpenFOAM/OpenFOAM-11/tree/master/tutorials/multiRegion/CHT/reverseBurner)
 
 [our reverseBurner](https://mega.nz/fm/LJd1XQoS)
 
-## Section 9: Closing Remarks 
+## Section 10: Solid Combustion: kivaTest 
+
+[OF11](https://github.com/OpenFOAM/OpenFOAM-11/tree/master/tutorials/XiFluid/kivaTest)
+
+## Section 11: Closing Remarks 
 This is the end.  
 
 
