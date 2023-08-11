@@ -258,7 +258,7 @@ Possibly extend to [DLRCJH](https://develop.openfoam.com/committees/hpc/-/tree/d
 
 ### Section 3.8: Exercises 
 
-1. compare runs with one-step chemistry, two-step chemistry, various forms of four-step chemistry, GRI-2.0 and GRI-3.0;
+1. compare runs with one-step chemistry, two-step chemistry, various forms of four-step chemistry, GRI-2.0 (good for thermal NO) and GRI-3.0 (inferior for thermal NO);
 2. compare thermal NO post-processing with NO computed from chemical mechanism; 
 3. compare runs with and without local time stepping (LTS); is this reported in the literature? 
 4. compare runs with and without TDAC chemistry tabulation and reduction: literature? 
@@ -266,7 +266,7 @@ Possibly extend to [DLRCJH](https://develop.openfoam.com/committees/hpc/-/tree/d
 6. compare runs on various meshes using remap from coarse to fine mesh; 
 7. mixture fraction computation using function object; 
 8. runs with adaptive mesh refinement (and load balancing)? 
-9. extend to (D)DES and LES; 
+9. extend to (D)DES and LES (compare with literature showing how time-average of LES solution ressembles RANS solution); 
 10. extend to other flames (SandiaE and SandiaF) in TNF workshop series; 
 
 ### Section 4.8: Reference results
@@ -274,7 +274,9 @@ Possibly extend to [DLRCJH](https://develop.openfoam.com/committees/hpc/-/tree/d
 2. [report](./tutorial-cases/case-sandia-flamed/talice-SandiaD-reactingFoam.pdf) by Marco Talice using ESI v1906; 
 3. [paper](http://web.stanford.edu/group/pitsch/publication/PitschPhysFluids_12_2000.pdf) by Pitsch and Steiner using LES and Lagrangian Flamelet Model; 
 4. [paper](https://pubs.acs.org/doi/pdf/10.1021/acs.energyfuels.8b01001) Li e.a. on TDAC 
-5. [video](https://www.linkedin.com/posts/senecal_cfd-convergecfd-combustion-activity-7069670018053013504-KFcJ/?utm_source=share&utm_medium=member_desktop%20\) ConvergeCFD simulation using LES anmd detailed chemistry;  
+5. paper: K. Misha, Hybrid RANS/LES Simulation of Methane–LOx Combustion, conference proceeding editted by De e.a.; 
+6. paper: Singh, Modelling of Turbulent Non-reacting Propane Jet Using OpenFOAMRANSandLESModels, conference proceedings, extinsive TNF documentation on the non-reactive case;  
+7. [video](https://www.linkedin.com/posts/senecal_cfd-convergecfd-combustion-activity-7069670018053013504-KFcJ/?utm_source=share&utm_medium=member_desktop%20\) ConvergeCFD simulation using LES anmd detailed chemistry;  
 
 ## Section 9: Turbulent Non-Premixed Combustion and Conjugate Heat Transfer: reverseBurner 
 
