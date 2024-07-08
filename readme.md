@@ -627,6 +627,17 @@ setting equal no (computationally cheap, less stable in convergence): in special
 - does overrelaxation play any role in case that nOuterCorrectors >= 2 is used?   
 - if nOuterCorrectors = 1, then PIMPLE = PISO, and maxCo <= 1 should be used. If nOuterCorrectors >= 2, then maxCo >=1 can be used. Balance the time step and the number of pressure solves 
 
+### Pitz - Dally pimpleFoam Test Case 
+
+<img src="./figures/testcases/pitzDally-pimpleFoam/pitzDally.pimpleFoam.cflp2.pressure.png" width=600 />
+<img src="./figures/testcases/pitzDally-pimpleFoam/pitzDally.pimpleFoam.cflp2.error.png" width=600 />
+
+<img src="./figures/testcases/pitzDally-pimpleFoam/pitzDally.pimpleFoam.cfl5.pressure.png" width=600 />
+<img src="./figures/testcases/pitzDally-pimpleFoam/pitzDally.pimpleFoam.cfl5.error.png" width=600 />
+
+<img src="./figures/testcases/pitzDally-pimpleFoam/pitzDally.pimpleFoam.cfl10.50outercorr.pressure.png" width=600 />
+<img src="./figures/testcases/pitzDally-pimpleFoam/pitzDally.pimpleFoam.cfl10.50outercorr.error.png" width=600 />
+
 ## Section 17: Radiative Heat Transfer 
 
 ### General Considerations 
@@ -835,7 +846,12 @@ boost library: #include <boost/math/special_functions/gamma.hpp> see https://www
 - beta-PDF integration: https://github.com/flameletFoam/flameletFoam-2.3.x/blob/master/applications/utilities/preProcessing/canteraToFoam/canteraReader.C 
 
 ### Flamelet Generated Model 
+- [CRECKFlameletModel](https://github.com/shor-ty/CRECKFlameletModel)
+- [paper Simulations of a Turbulent Line Fire with a Steady Flamelet Model](https://iopscience.iop.org/article/10.1088/1742-6596/1107/4/042009/pdf)
 - wiki [Flamelet generated manifold](https://en.wikipedia.org/wiki/Flamelet_generated_manifold) 
+
+### Thickened Flame Model
+- [thickened-flame-model](https://www.cfd-online.com/Forums/openfoam-programming-development/84127-thickened-flame-model.html) 
 
 ## Section 21: Conjugate Heat Transfer 
 
