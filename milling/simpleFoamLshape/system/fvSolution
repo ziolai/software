@@ -1,0 +1,67 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                |
+| \\      /  F ield         | cfMesh: A library for mesh generation          |
+|  \\    /   O peration     |                                                |
+|   \\  /    A nd           | Author: Franjo Juretic                         |
+|    \\/     M anipulation  | E-mail: franjo.juretic@c-fields.com            |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solvers
+{
+    p
+    {
+        solver           PCG;
+        preconditioner   DIC;
+        tolerance        1e-06;
+        relTol           0.1;
+    };
+
+    "(U|k|epsilon)"  
+    {
+        solver           PBiCG;
+        preconditioner   DILU;
+        tolerance        1e-06;
+        relTol           0.1;
+    };
+}
+
+SIMPLE
+{
+    nNonOrthogonalCorrectors 0;
+    consistent      yes;
+
+    residualControl
+    {
+        p               1e-4;
+        "(Ux|Uy)"       1e-4;
+        Uz              1e-1; // less stringent on z-component 
+        "(k|epsilon)"   1e-3;
+    }
+}
+
+relaxationFactors
+{
+    fields
+    {
+        p               0.7; 
+        U               0.7; 
+        ".*"            0.7; 
+    }
+    equations
+    {
+        p               0.7; 
+        U               0.7; 
+        ".*"            0.7; 
+    }
+}
+
+// ************************************************************************* //
