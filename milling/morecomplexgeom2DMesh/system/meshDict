@@ -1,0 +1,87 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                |
+| \\      /  F ield         | cfMesh: A library for mesh generation          |
+|  \\    /   O peration     |                                                |
+|   \\  /    A nd           | Author: Franjo Juretic                         |
+|    \\/     M anipulation  | E-mail: franjo.juretic@c-fields.com            |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      meshDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+maxCellSize     0.01;
+//maxCellSize     0.015;
+maxCellSize     0.025;
+
+// boundaryCellSize 0.01;
+
+surfaceFile     "geom.fms";
+
+objectRefinements
+{
+    inneroutletrefiment
+    {
+        type        box;
+        additionalRefinementLevels 4; 
+        centre      (1.5 0.005 0.05);
+        lengthX     1.;
+        lengthY     0.01;
+        lengthZ     0.1;
+    }
+}
+
+objectRefinements
+{
+    outeroutletrefiment
+    {
+        type        box;
+        additionalRefinementLevels 2; 
+        centre      (1.25 0.2 0.05);
+        lengthX     1.5;
+        lengthY     0.4;
+        lengthZ     0.1;
+    }
+}
+
+boundaryLayers
+{
+    nLayers 2;
+
+    // thicknessRatio 1.1;
+
+    // maxFirstLayerThickness 0.5;
+
+    patchBoundaryLayers
+    {
+
+       inlet
+       {
+         nLayers 0;
+       }
+
+       outlet
+       {
+         nLayers 0;
+       }
+
+       axis 
+       {
+         nLayers 0;
+       }
+
+       stator1
+       {
+         nLayers 2;
+       }
+
+    }
+}
+
+// ************************************************************************* //
