@@ -1,0 +1,104 @@
+ /*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                |
+| \\      /  F ield         | cfMesh: A library for mesh generation          |
+|  \\    /   O peration     |                                                |
+|   \\  /    A nd           | Author: Franjo Juretic                         |
+|    \\/     M anipulation  | E-mail: franjo.juretic@c-fields.com            |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version   2.0;
+    format    ascii;
+    class     dictionary;
+    object    controlDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     cartesian2DMesh;
+
+startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         10000;
+
+deltaT          1;
+
+writeControl    timeStep;
+
+writeInterval   500;
+
+writeFormat     ascii;
+
+writePrecision  12; // 6; 
+
+writeCompression off;
+
+runTimeModifiable yes;
+
+functions
+{
+    #includeFunc streamlines
+
+    solverInfo
+    {
+      type            solverInfo;
+      libs            ("libutilityFunctionObjects.so");
+      fields          (U p);
+      writeResidualFields yes;
+
+      // Optional (inherited) entries
+      timeStart       0;
+      timeEnd         10000;
+      executeControl  timeStep;
+      executeInterval 1;
+      writeControl    timeStep;
+      writeInterval   500;
+    }
+
+    turbulenceFields1
+    {
+        // Mandatory entries (unmodifiable)
+        type            turbulenceFields;
+        libs            (fieldFunctionObjects);
+
+        // Mandatory entries (runtime modifiable)
+        // Either field or fields entries
+        // fields          (R devRhoReff);
+        field           R;
+
+        // Optional (inherited) entries
+        //region          region0;
+        //enabled         true;
+        //log             true;
+        timeStart       0;
+        timeEnd         10000;
+        executeControl  timeStep;
+        executeInterval 1;
+        writeControl    timeStep;
+        writeInterval   500;
+    }
+
+    #includeFunc graphs
+
+    fieldMinMax1
+    {
+       // Mandatory entries (unmodifiable)
+       type        fieldMinMax;
+       libs        (fieldFunctionObjects);
+
+       // Mandatory entries (runtime modifiable)
+       mode        magnitude;
+       fields      (U p);
+
+       // Optional entries (runtime modifiable)
+       location    true;
+
+       // Optional (inherited) entries
+    }
+}
+
+// ************************************************************************* //

@@ -1,0 +1,91 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2112                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      k;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform 1;
+
+boundaryField
+{
+    inlet
+    {
+        type            turbulentIntensityKineticEnergyInlet;
+        intensity       0.05;
+        value           $internalField;
+    }
+    outlet
+    {
+        type            zeroGradient; // inletOutlet;
+        // inletValue      $internalField;
+        // value           $internalField;
+    }
+    rotor
+    {
+        type            kqRWallFunction;
+        value           uniform $internalField;
+    }
+    stator1_wall
+    {
+        type            kqRWallFunction;
+        value           uniform $internalField;
+    }
+    stator2_wall
+    {
+        type            kqRWallFunction;
+        value           uniform $internalField;
+    }
+    stator3_wall
+    {
+        type            kqRWallFunction;
+        value           uniform $internalField;
+    }
+    box1_wall
+    {
+        type            kqRWallFunction;
+        value           uniform $internalField;
+    }
+    box2_wall
+    {
+        type            kqRWallFunction;
+        value           uniform $internalField;
+    }
+    box3_wall
+    {
+        type            kqRWallFunction;
+        value           uniform $internalField;
+    }
+    nozzle_wall
+    {
+        type            kqRWallFunction;
+        value           uniform $internalField;
+    }
+    axis
+    {
+        type            kqRWallFunction;
+        value           uniform $internalField;  
+    } 
+    bottomEmptyFaces
+    {
+        type            wedge;
+    }
+    topEmptyFaces
+    {
+        type            wedge;
+    }
+}
+
+
+// ************************************************************************* //

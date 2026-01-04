@@ -1,0 +1,88 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2112                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      epsilon;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -3 0 0 0 0];
+
+internalField   uniform 200;
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           $internalField;
+    }
+    outlet
+    {
+        type            zeroGradient;
+    }
+    rotor
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    stator1_wall
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    stator2_wall
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    stator3_wall
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    box1_wall
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    box2_wall
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    box3_wall
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    nozzle_wall
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    }
+    axis
+    {
+        type            epsilonWallFunction;
+        value           $internalField;
+    } 
+    bottomEmptyFaces
+    {
+        type            wedge;
+    }
+    topEmptyFaces
+    {
+        type            wedge;
+    }
+}
+
+
+// ************************************************************************* //

@@ -1,0 +1,20 @@
+// ************************************************************************* //
+// Geometry constants - Shared among various m4 files 
+
+// define(ygap, 0.01)           // length of air gap - works 
+// define(ygap, 0.005)           // length of air gap - works 
+// define(ygap, 0.02) // making the problem easier on purpose 
+define(ygap, 0.1) // making gap large enough for mesh to work without refinement zones  
+define(mygap, calc(-ygap))   
+define(xstator, 0.5)         // x-coordinate of point on stator surface 
+define(ystator, 0.4)         // y-coordinate of point on stator surface 
+
+define(ycr1, calc((1.0-ygap)/2))     // y-coordinate of center of first refinement zone  
+define(yhr1, calc(1.0+ygap))         // height of first refinement zone 
+define(ycr2, ycr1)                   // y-coordinate of center of second refinement zone  
+define(yhr2, yhr1)                   // height of second refinement zone 
+define(ycr3, calc((ystator-ygap)/2)) // y-coordinate of center of third refinement zone  
+define(yhr3, calc(ystator+ygap))     // height of third refinement zone 
+define(ycr4, calc(mygap/2.0))        // y-coordinate of center of fourth refinement zone  
+define(yhr4, ygap)                   // height of fourth refinement zone
+// ************************************************************************* //
