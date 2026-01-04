@@ -1,0 +1,7 @@
+#!/bin/bash
+
+gnuplot -persist >/dev/null 2>&2 << EOF 
+   plot "postProcessing/graphs/1150/lineA_turbulenceProperties:R.xy" using 1:5 with lines, \
+        "postProcessing/graphs/1150/lineB_turbulenceProperties:R.xy" using 1:5 with lines, \
+        "postProcessing/graphs/1150/lineC_turbulenceProperties:R.xy" using 1:5 with lines 
+EOF 
