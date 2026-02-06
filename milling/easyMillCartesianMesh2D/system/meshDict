@@ -42,21 +42,28 @@ FoamFile
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-maxCellSize     0.01;
+surfaceFile     "geom.fms";
+
+workflowControls
+{
+  // stopAfter boundaryLayerRefinement;
+  // stopAfter boundaryLayerGeneration;
+}
+ 
 //maxCellSize     0.015;
 maxCellSize     0.015;
 
-// boundaryCellSize 0.01;
-
-surfaceFile     "geom.fms";
+// size of the cells at the boundary - optional - how to set this number relative to maxCellSize 
+boundaryCellSize .005;
+boundaryCellSizeRefinementThickness 0.01; 
 
 boundaryLayers
 {
-    nLayers 2;
+    nLayers				10; // 2;		// (optional) global number of layers 
 
-    // thicknessRatio 1.1;
+    thicknessRatio 			1.75; // 1.9; // 1.2;		// (optional) thickness ratio
 
-    // maxFirstLayerThickness 0.5;
+    maxFirstLayerThickness 		0.5;		// (optional) max thickness of the first layer [m]
 
     patchBoundaryLayers
     {
@@ -81,6 +88,19 @@ boundaryLayers
 //         nLayers 2;
 //       }
 
+    }
+
+    untangleLayers 			1;		// (optional) deactivate untangling of boundary layers - activated by default
+
+    optimiseLayer 			1;		// (optional) activates smoothing of boundary layers - deactivated by default
+
+    optimisationParameters
+    {
+        nSmoothNormals 			5;		// (optional) number of iterations in the procedure for reducing normal variation
+        relThicknessTol 		0.1; 		// (optional) maximum allowed thickness variation of thickness between two neigbouring points, divided by the distance between the points
+        featureSizeFactor 		0.4;		// (optional) ratio between the maximum layer thickness and the estimated feature size
+        reCalculateNormals 		1; 		// (optional) activate 1 or deactivate 0 calculation of normal
+        maxNumIterations 		5;		// (optional) maximum number of iterations of the whole procedure
     }
 }
 
