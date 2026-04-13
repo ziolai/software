@@ -1,0 +1,81 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                |
+| \\      /  F ield         | cfMesh: A library for mesh generation          |
+|  \\    /   O peration     |                                                |
+|   \\  /    A nd           | Author: Franjo Juretic                         |
+|    \\/     M anipulation  | E-mail: franjo.juretic@c-fields.com            |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      meshDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+surfaceFile     "geom.fms";
+
+workflowControls
+{
+  // stopAfter boundaryLayerRefinement;
+  // stopAfter boundaryLayerGeneration;
+}
+ 
+maxCellSize     1e-3;
+
+
+objectRefinements
+{
+
+    zone1refiment // refine all from y = 60 mm downward   
+    {
+        type             cone;
+        additionalRefinementLevels 1; 
+        p0               (0. -5e-3 0.);
+        p1               (0.  60e-3 0.);
+        radius0          100e-3;
+        radius1          100e-3;
+    }
+
+    zone2refiment // refine all from y = 30 mm downward  
+    {
+        type             hollowCone;
+        additionalRefinementLevels 2; 
+        p0               (0. -5e-3 0.);
+        p1               (0.  30e-3 0.);
+        radius0_Inner    0e-3;
+        radius0_Outer    100e-3;
+        radius1_Inner    0e-3;
+        radius1_Outer    100e-3;
+    }
+
+    zone3refiment // refine close to wall from y = 20 mm downward
+    {
+        type             hollowCone;
+        additionalRefinementLevels 3; 
+        p0               (0. -5e-3 0.);
+        p1               (0.  20e-3 0.);
+        radius0_Inner    15e-3;
+        radius0_Outer    100e-3;
+        radius1_Inner    15e-3;
+        radius1_Outer    100e-3;
+    }
+
+    zone4refiment // some comment 
+    {
+        type             hollowCone;
+        additionalRefinementLevels 4; 
+        p0               (0. -5e-3 0.);
+        p1               (0.  5e-3 0.);
+        radius0_Inner    50e-3;
+        radius0_Outer    100e-3;
+        radius1_Inner    50e-3;
+        radius1_Outer    100e-3;
+    }
+
+}  
+
+// ************************************************************************* //
